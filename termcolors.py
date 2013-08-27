@@ -2,7 +2,7 @@
 import sys
 
 # highlights a string with the given color
-def highlight(text = ' *** ', fg = None, bg = None):
+def _highlight(text = ' *** ', fg = None, bg = None):
 	# adjust the fg color to the correct escape code
 	if fg != None:
 		if fg > 7:
@@ -26,42 +26,42 @@ def highlight(text = ' *** ', fg = None, bg = None):
 	# print a fg and bg
 	return '\033[%dm\033[%dm%s\033[0m' % (fg_esc, bg_esc, text)
 
-def print_short():
+def _print_short():
 	print ''
 
-	for f in range(3):
+	for f in range(2):
 		row = '  '
 		for b in range(8):
-			row += highlight(text='    ', fg = b, bg = b)
-			row += highlight(text='    ', fg = b + 8, bg = b + 8)
+			row += _highlight(text='   ', fg = b, bg = b)
+			row += _highlight(text='   ', fg = b + 8, bg = b + 8)
 			row += '  '
 		print row
 
 	print ''
 
-def print_palette():
+def _print_palette():
 	print ''
 
 	row = ' '*5
 	for b in range(8):
-		row += highlight(text=' %2s ' % b, fg = b)
-		row += highlight(text=' %2s ' % (b + 8), fg = b + 8)
+		row += _highlight(text=' %2s ' % b, fg = b)
+		row += _highlight(text=' %2s ' % (b + 8), fg = b + 8)
 		row += '  '
 	print row
 
 	row = ' '*5
 	for b in range(8):
-		row += highlight(text='    ', fg = b, bg = b)
-		row += highlight(text='    ', fg = b + 8, bg = b + 8)
+		row += _highlight(text='    ', fg = b, bg = b)
+		row += _highlight(text='    ', fg = b + 8, bg = b + 8)
 		row += '  '
 	print row
 
 	for f in range(16):
-		row = highlight(text=' %2s  ' % f, fg = f)
+		row = _highlight(text=' %2s  ' % f, fg = f)
 
 		for b in range(8):
-			row += highlight(text=' %2s ' % f, fg = f, bg = b)
-			row += highlight(text=' %2s ' % f, fg = f, bg = b + 8)
+			row += _highlight(text=' %2s ' % f, fg = f, bg = b)
+			row += _highlight(text=' %2s ' % f, fg = f, bg = b + 8)
 			row += '  '
 		print row
 
@@ -69,11 +69,11 @@ def print_palette():
 
 def main(args):
 	if len(args) == 0:
-		print_palette()
+		_print_palette()
 	elif args[0] in ('-s', '--short'):
-		print_short()
+		_print_short()
 	else:
-		print 'Usage: ./colors.py [-s|--short]'
+		print 'Usage: termcolors [-s|--short]'
 
 if __name__ == '__main__':
 	main(sys.argv[1:])
